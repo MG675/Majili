@@ -357,7 +357,7 @@ class GoogleDriveHelper:
                     LOGGER.info("Deleting cloned data from Drive...")
                     self.deletefile(durl)
                     return "your clone has been stopped and cloned data has been deleted!", "cancelled"
-                msg += f'<b>╔—●: </b><code>{meta.get("name")}</code>'
+                msg += f'<b>╔—●Name: </b><code>{meta.get("name")}</code>'
                 msg += f'\n<b>╟—●Size: </b>{get_readable_file_size(self.transferred_size)}'
                 msg += '\n<b>╟—●Type: </b>Folder'
                 msg += f'\n<b>╟—●SubFolders: </b>{self.__total_folders}'
