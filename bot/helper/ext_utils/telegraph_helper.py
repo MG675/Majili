@@ -1,4 +1,4 @@
-# Implement By - @VarnaX-279
+# Implement By - @miHurad
 
 from string import ascii_letters
 from random import SystemRandom
