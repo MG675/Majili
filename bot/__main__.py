@@ -44,7 +44,7 @@ def stats(update, context):
     mem_t = get_readable_file_size(memory.total)
     mem_a = get_readable_file_size(memory.available)
     mem_u = get_readable_file_size(memory.used)
-    stats = f'<b>╭───《⟹@ɪᴍʜᴜʀᴀᴅ⟸》</b> {last_commit}\n'\
+    stats = f'<b>╭───《⟹ʜᴇɴᴛᴀɪ⟸》</b> {last_commit}\n'\
             f'<b>├─ʙᴏᴛ ᴜᴘᴛɪᴍᴇ:</b> {currentTime}\n'\
             f'<b>├─ᴏꜱ ᴜᴘᴛɪᴍᴇ:</b> {osUptime}\n'\
             f'<b>├─📀ᴛᴏᴛᴀʟ ᴅɪꜱᴋ ꜱᴘᴀᴄᴇ:</b> {total}\n'\
@@ -74,7 +74,7 @@ Type /{BotCommands.HelpCommand} to get a list of available commands
 '''
         sendMarkup(start_string, context.bot, update.message, reply_markup)
     else:
-        sendMarkup('Not Authorized user, deploy your own mirror-leech bot', context.bot, update.message, reply_markup)
+        sendMarkup('Not Authorized user', context.bot, update.message, reply_markup)
 
 def restart(update, context):
     restart_message = sendMessage("Restarting...", context.bot, update.message)
