@@ -50,7 +50,7 @@ class setInterval:
             nextTime += self.interval
             self.action()
 
-    def ╚—●/ᴄᴀɴᴄᴇʟ(self):
+    def /ᴄᴀɴᴄᴇʟ(self):
         self.stopEvent.set()
 
 def get_readable_file_size(size_in_bytes) -> str:
