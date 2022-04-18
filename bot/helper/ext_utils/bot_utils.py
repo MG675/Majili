@@ -127,7 +127,7 @@ def get_readable_message():
             START = COUNT
         for index, download in enumerate(list(download_dict.values())[START:], start=1):
             msg += f"<b>╔—●Name:</b> <code>{escape(str(download.name()))}</code>"
-            msg += f"\n<b>Status:</b> <i>{download.status()}</i>"
+            msg += f"\n<b>╟—●Status:</b> <i>{download.status()}</i>"
             if download.status() not in [
                 MirrorStatus.STATUS_ARCHIVING,
                 MirrorStatus.STATUS_EXTRACTING,
@@ -284,3 +284,4 @@ def get_content_type(link: str) -> str:
         except:
             content_type = None
     return content_type
+
