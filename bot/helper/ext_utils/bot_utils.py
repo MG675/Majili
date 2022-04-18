@@ -262,7 +262,6 @@ def is_magnet(url: str):
 
 def new_thread(fn):
     """To use as decorator to make a function call threaded.
-    Needs import
     from threading import Thread"""
 
     def wrapper(*args, **kwargs):
@@ -272,11 +271,14 @@ def new_thread(fn):
 
     return wrapper
 
-def get_content_type(link: str) -> str:
+def get_content_type(link: str):
     try:
-        res = rhead(link, allow_redirects=True, timeout=5, headers = {'user-agent': 'Wget/1.12'})
+        res = rhead(link, allow_redirects=True, timeout=5)
         content_type = res.headers.get('content-type')
     except:
+        content_type = None
+
+    if content_type is None:
         try:
             res = urlopen(link, timeout=5)
             info = res.info()
