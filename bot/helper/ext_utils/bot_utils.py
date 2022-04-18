@@ -106,8 +106,8 @@ def get_progress_bar_string(status):
     p = 0 if total == 0 else round(completed * 100 / total)
     p = min(max(p, 0), 100)
     cFull = p // 8
-    p_str = '★' * cFull
-    p_str += '⚝' * (12 - cFull)
+    p_str = '🟪' * cFull
+    p_str += '⬛️' * (12 - cFull)
     p_str = f"[{p_str}]"
     return p_str
 
@@ -152,14 +152,14 @@ def get_readable_message():
                            f" | <b>╟—●ʟᴇᴇᴄʜᴇʀꜱ:</b> {download.torrent_info().num_leechs}"
                 except:
                     pass
-                msg += f"\n<code>/╚—●{BotCommands.CancelMirror} {download.gid()}</code>"
+                msg += f"\n<code>╚—●/{BotCommands.CancelMirror} {download.gid()}</code>"
             elif download.status() == MirrorStatus.STATUS_SEEDING:
                 msg += f"\n<b>╟—●🖇ꜱɪᴢᴇ: </b>{download.size()}"
                 msg += f"\n<b>╟—●⚡️ꜱᴘᴇᴇᴅ: </b>{get_readable_file_size(download.torrent_info().upspeed)}/s"
                 msg += f" | <b>╟—●📥ᴜᴘʟᴏᴀᴅᴇᴅ: </b>{get_readable_file_size(download.torrent_info().uploaded)}"
                 msg += f"\n<b>╟—●📊ʀᴀᴛɪᴏ: </b>{round(download.torrent_info().ratio, 3)}"
                 msg += f" | <b>╟—●⏳ᴛɪᴍᴇ: </b>{get_readable_time(download.torrent_info().seeding_time)}"
-                msg += f"\n<code>/╚—●{BotCommands.CancelMirror} {download.gid()}</code>"
+                msg += f"\n<code>╚—●/{BotCommands.CancelMirror} {download.gid()}</code>"
             else:
                 msg += f"\n<b>╟—●🖇ꜱɪᴢᴇ: </b>{download.size()}"
             msg += "\n"
