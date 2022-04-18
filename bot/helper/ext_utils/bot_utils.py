@@ -50,7 +50,7 @@ class setInterval:
             nextTime += self.interval
             self.action()
 
-    def ᴄᴀɴᴄᴇʟ(self):
+    def /ᴄᴀɴᴄᴇʟ(self):
         self.stopEvent.set()
 
 def get_readable_file_size(size_in_bytes) -> str:
@@ -106,8 +106,8 @@ def get_progress_bar_string(status):
     p = 0 if total == 0 else round(completed * 100 / total)
     p = min(max(p, 0), 100)
     cFull = p // 8
-    p_str = '🟪' * cFull
-    p_str += '⬛️' * (12 - cFull)
+    p_str = '★' * cFull
+    p_str += '⚝' * (12 - cFull)
     p_str = f"[{p_str}]"
     return p_str
 
@@ -152,14 +152,14 @@ def get_readable_message():
                            f" | <b>╟—●ʟᴇᴇᴄʜᴇʀꜱ:</b> {download.torrent_info().num_leechs}"
                 except:
                     pass
-                msg += f"\n<code> /{BotCommands.CancelMirror} {download.gid()}</code>"
-            elif download.status() == MirrorStatus.STATUS_SEEDING:
-                msg += f"\n<b>╟—● 🖇ꜱɪᴢᴇ: </b>{download.size()}"
-                msg += f"\n<b>╟—● ⚡️ꜱᴘᴇᴇᴅ: </b>{get_readable_file_size(download.torrent_info().upspeed)}/s"
-                msg += f" | <b>╟—● 📥ᴜᴘʟᴏᴀᴅᴇᴅ: </b>{get_readable_file_size(download.torrent_info().uploaded)}"
-                msg += f"\n<b>╟—● 📊ʀᴀᴛɪᴏ: </b>{round(download.torrent_info().ratio, 3)}"
-                msg += f" | <b>╟—● ⏳ᴛɪᴍᴇ: </b>{get_readable_time(download.torrent_info().seeding_time)}"
                 msg += f"\n<code>╚—● /{BotCommands.CancelMirror} {download.gid()}</code>"
+            elif download.status() == MirrorStatus.STATUS_SEEDING:
+                msg += f"\n<b>╟—●🖇ꜱɪᴢᴇ: </b>{download.size()}"
+                msg += f"\n<b>╟—●⚡️ꜱᴘᴇᴇᴅ: </b>{get_readable_file_size(download.torrent_info().upspeed)}/s"
+                msg += f" | <b>╟—●📥ᴜᴘʟᴏᴀᴅᴇᴅ: </b>{get_readable_file_size(download.torrent_info().uploaded)}"
+                msg += f"\n<b>╟—●📊ʀᴀᴛɪᴏ: </b>{round(download.torrent_info().ratio, 3)}"
+                msg += f" | <b>╟—●⏳ᴛɪᴍᴇ: </b>{get_readable_time(download.torrent_info().seeding_time)}"
+                msg += f"\n<code> /{BotCommands.CancelMirror} {download.gid()}</code>"
             else:
                 msg += f"\n<b>╟—●🖇ꜱɪᴢᴇ: </b>{download.size()}"
             msg += "\n"
@@ -183,7 +183,7 @@ def get_readable_message():
         dlspeed = get_readable_file_size(dlspeed_bytes)
         upspeed = get_readable_file_size(upspeed_bytes)
         bmsg += f"\n<b>♦️ʀᴀᴍ: </b> {virtual_memory().percent}% | <b>⏰ᴜᴘ-ᴛɪᴍᴇ:</b> {currentTime}"
-        bmsg += f"\n<b>📥DL:</b> {dlspeed}/ꜱ | <b>📤UL:</b> {upspeed}/ꜱ"
+        bmsg += f"\n<b>📥DL:</b> {dlspeed}/s | <b>📤UL:</b> {upspeed}/s"
         if STATUS_LIMIT is not None and tasks > STATUS_LIMIT:
             msg += f"<b>📄ᴘᴀɢᴇ:</b> {PAGE_NO}/{pages} | <b>📈ᴛᴀꜱᴋ:</b> {tasks}\n"
             buttons = ButtonMaker()
@@ -262,6 +262,7 @@ def is_magnet(url: str):
 
 def new_thread(fn):
     """To use as decorator to make a function call threaded.
+    Needs import
     from threading import Thread"""
 
     def wrapper(*args, **kwargs):
@@ -271,14 +272,11 @@ def new_thread(fn):
 
     return wrapper
 
-def get_content_type(link: str):
+def get_content_type(link: str) -> str:
     try:
-        res = rhead(link, allow_redirects=True, timeout=5)
+        res = rhead(link, allow_redirects=True, timeout=5, headers = {'user-agent': 'Wget/1.12'})
         content_type = res.headers.get('content-type')
     except:
-        content_type = None
-
-    if content_type is None:
         try:
             res = urlopen(link, timeout=5)
             info = res.info()
