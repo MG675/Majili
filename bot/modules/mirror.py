@@ -150,7 +150,7 @@ class MirrorListener:
                         osremove(f_path)
         if self.isLeech:
             size = get_path_size(f'{DOWNLOAD_DIR}{self.uid}')
-            LOGGER.info(f"Leech Name: {up_name}")
+            LOGGER.info(f"╔—●Leech Name: {up_name}")
             tg = TgUploader(up_name, self)
             tg_upload_status = TgUploadStatus(tg, size, gid, self)
             with download_dict_lock:
@@ -159,7 +159,7 @@ class MirrorListener:
             tg.upload()
         else:
             size = get_path_size(up_path)
-            LOGGER.info(f"Upload Name: {up_name}")
+            LOGGER.info(f"╔—●Upload Name: {up_name}")
             drive = GoogleDriveHelper(up_name, self)
             upload_status = UploadStatus(drive, size, gid, self)
             with download_dict_lock:
