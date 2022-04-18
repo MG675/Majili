@@ -186,13 +186,13 @@ class MirrorListener:
             update_all_messages()
 
     def onUploadComplete(self, link: str, size, files, folders, typ, name: str):
-        msg = f'<b>╔—●ɴᴀᴍᴇ: </b><code>{escape(name)}</code>\n<b>╟—●🖇ꜱɪᴢᴇ: </b>{size}'
+        msg = f'<b>╭─── Name: </b><code>{escape(name)}</code>\n<b>├─ᴏ Size: </b>{size}'
         if self.isLeech:
             count = len(files)
-            msg += f'\n<b>╟—●Total Files: </b>{count}'
+            msg += f'\n<b>├─ᴏ Total Files: </b>{count}'
             if typ != 0:
-                msg += f'\n<b>╟—●Corrupted Files: </b>{typ}'
-            msg += f'\n<b>╚—●cc: </b>{self.tag}\n'
+                msg += f'\n<b>├─ᴏ Corrupted Files: </b>{typ}'
+            msg += f'\n<b>╚—● CC: </b>{self.tag}\n'
             if self.message.chat.type == 'private':
                 sendMessage(msg, self.bot, self.message)
             else:
@@ -220,11 +220,11 @@ class MirrorListener:
             else:
                 update_all_messages()
         else:
-            msg += f'\n\n<b>╟—●Type: </b>{typ}'
+            msg += f'\n\n<b> ├─ᴏ Type: </b>{typ}'
             if ospath.isdir(f'{DOWNLOAD_DIR}{self.uid}/{name}'):
-                msg += f'\n<b>╟—●SubFolders: </b>{folders}'
-                msg += f'\n<b>╟—●Files: </b>{files}'
-            msg += f'\n\n<b>╚—●cc: </b>{self.tag}'
+                msg += f'\n<b> ├─ᴏ SubFolders: </b>{folders}'
+                msg += f'\n<b> ├─ᴏ Files: </b>{files}'
+            msg += f'\n\n<b> ╚—● cc: </b>{self.tag}'
             buttons = ButtonMaker()
             link = short_url(link)
             buttons.buildbutton("☁️ Drive Link", link)
