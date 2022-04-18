@@ -162,7 +162,7 @@ def get_readable_message():
                 msg += f"\n<code>/{BotCommands.CancelMirror} {download.gid()}</code>"
             else:
                 msg += f"\n<b>╟—●🖇ꜱɪᴢᴇ: </b>{download.size()}"
-            msg += "\n\n"
+            msg += "\n"
             if STATUS_LIMIT is not None and index == STATUS_LIMIT:
                 break
         free = get_readable_file_size(disk_usage(DOWNLOAD_DIR).free)
