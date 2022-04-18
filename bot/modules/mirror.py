@@ -50,7 +50,7 @@ class MirrorListener:
         self.pswd = pswd
         self.tag = tag
 
-    def clean(self):
+    def cancel(self):
         try:
             aria2.purge()
             Interval[0].cancel()
