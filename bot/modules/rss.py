@@ -15,12 +15,12 @@ rss_dict_lock = Lock()
 
 def rss_list(update, context):
     if len(rss_dict) > 0:
-        list_feed = "<b>Your subscriptions: </b>\n\n"
+        list_feed = "<b>ʏᴏᴜʀ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴꜱ: </b>\n\n"
         for title, url in list(rss_dict.items()):
-            list_feed += f"<b>Title:</b> <code>{title}</code>\n<b>Feed Url: </b><code>{url[0]}</code>\n\n"
+            list_feed += f"<b>ᴛɪᴛʟᴇ:</b> <code>{title}</code>\n<b>Feed Url: </b><code>{url[0]}</code>\n\n"
         sendMessage(list_feed, context.bot, update.message)
     else:
-        sendMessage("No subscriptions.", context.bot, update.message)
+        sendMessage("ɴᴏ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴꜱ.", context.bot, update.message)
 
 def rss_get(update, context):
     try:
@@ -30,7 +30,7 @@ def rss_get(update, context):
         feed_url = rss_dict.get(title)
         if feed_url is not None and count > 0:
             try:
-                msg = sendMessage(f"Getting the last <b>{count}</b> item(s) from {title}", context.bot, update.message)
+                msg = sendMessage(f"ᴇᴛᴛɪɴɢ ᴛʜᴇ ʟᴀꜱᴛ <b>{count}</b> ɪᴛᴇᴍ(ꜱ) ꜰʀᴏᴍ {title}", context.bot, update.message)
                 rss_d = feedparse(feed_url[0])
                 item_info = ""
                 for item_num in range(count):
@@ -38,19 +38,19 @@ def rss_get(update, context):
                         link = rss_d.entries[item_num]['links'][1]['href']
                     except IndexError:
                         link = rss_d.entries[item_num]['link']
-                    item_info += f"<b>Name: </b><code>{rss_d.entries[item_num]['title'].replace('>', '').replace('<', '')}</code>\n"
-                    item_info += f"<b>Link: </b><code>{link}</code>\n\n"
+                    item_info += f"<b>╔—●ɴᴀᴍᴇ: </b><code>{rss_d.entries[item_num]['title'].replace('>', '').replace('<', '')}</code>\n"
+                    item_info += f"<b>╟—●ʟɪɴᴋ: </b><code>{link}</code>\n\n"
                 editMessage(item_info, msg)
             except IndexError as e:
                 LOGGER.error(str(e))
-                editMessage("Parse depth exceeded. Try again with a lower value.", msg)
+                editMessage("ᴘᴀʀꜱᴇ ᴅᴇᴘᴛʜ ᴇxᴄᴇᴇᴅᴇᴅ. ᴛʀʏ ᴀɢᴀɪɴ ᴡɪᴛʜ ᴀ ʟᴏᴡᴇʀ ᴠᴀʟᴜᴇ.", msg)
             except Exception as e:
                 LOGGER.error(str(e))
                 editMessage(str(e), msg)
         else:
             sendMessage("Enter a vaild title/value.", context.bot, update.message)
     except (IndexError, ValueError):
-        sendMessage(f"Use this format to fetch:\n/{BotCommands.RssGetCommand} Title value", context.bot, update.message)
+        sendMessage(f"ᴜꜱᴇ ᴛʜɪꜱ ꜰᴏʀᴍᴀᴛ ᴛᴏ ꜰᴇᴛᴄʜ:\n/{BotCommands.RssGetCommand} ᴛɪᴛʟᴇ ᴠᴀʟᴜᴇ", context.bot, update.message)
 
 def rss_sub(update, context):
     try:
@@ -72,20 +72,20 @@ def rss_sub(update, context):
             filters = None
         exists = rss_dict.get(title)
         if exists is not None:
-            LOGGER.error("This title already subscribed! Choose another title!")
-            return sendMessage("This title already subscribed! Choose another title!", context.bot, update.message)
+            LOGGER.error("ᴛʜɪꜱ ᴛɪᴛʟᴇ ᴀʟʀᴇᴀᴅʏ ꜱᴜʙꜱᴄʀɪʙᴇᴅ! ᴄʜᴏᴏꜱᴇ ᴀɴᴏᴛʜᴇʀ ᴛɪᴛʟᴇ!")
+            return sendMessage("ᴛʜɪꜱ ᴛɪᴛʟᴇ ᴀʟʀᴇᴀᴅʏ ꜱᴜʙꜱᴄʀɪʙᴇᴅ! ᴄʜᴏᴏꜱᴇ ᴀɴᴏᴛʜᴇʀ ᴛɪᴛʟᴇ!", context.bot, update.message)
         try:
             rss_d = feedparse(feed_link)
-            sub_msg = "<b>Subscribed!</b>"
-            sub_msg += f"\n\n<b>Title: </b><code>{title}</code>\n<b>Feed Url: </b>{feed_link}"
-            sub_msg += f"\n\n<b>latest record for </b>{rss_d.feed.title}:"
-            sub_msg += f"\n\n<b>Name: </b><code>{rss_d.entries[0]['title'].replace('>', '').replace('<', '')}</code>"
+            sub_msg = "<b>ꜱᴜʙꜱᴄʀɪʙᴇᴅ!</b>"
+            sub_msg += f"\n\n<b>╟—●ᴛɪᴛʟᴇ: </b><code>{title}</code>\n<b>Feed Url: </b>{feed_link}"
+            sub_msg += f"\n\n<b>╟—●ʟᴀᴛᴇꜱᴛ ʀᴇᴄᴏʀᴅ ꜰᴏʀ </b>{rss_d.feed.title}:"
+            sub_msg += f"\n\n<b>╔—●ɴᴀᴍᴇ: </b><code>{rss_d.entries[0]['title'].replace('>', '').replace('<', '')}</code>"
             try:
                 link = rss_d.entries[0]['links'][1]['href']
             except IndexError:
                 link = rss_d.entries[0]['link']
-            sub_msg += f"\n\n<b>Link: </b><code>{link}</code>"
-            sub_msg += f"\n\n<b>Filters: </b><code>{filters}</code>"
+            sub_msg += f"\n\n<b>╟—●ʟɪɴᴋ: </b><code>{link}</code>"
+            sub_msg += f"\n\n<b>╟—●ꜰɪʟᴛᴇʀꜱ: </b><code>{filters}</code>"
             last_link = str(rss_d.entries[0]['link'])
             last_title = str(rss_d.entries[0]['title'])
             DbManger().rss_add(title, feed_link, last_link, last_title, filters)
@@ -94,10 +94,10 @@ def rss_sub(update, context):
                     rss_job.enabled = True
                 rss_dict[title] = [feed_link, last_link, last_title, f_lists]
             sendMessage(sub_msg, context.bot, update.message)
-            LOGGER.info(f"Rss Feed Added: {title} - {feed_link} - {filters}")
+            LOGGER.info(f"ʀꜱꜱ ꜰᴇᴇᴅ ᴀᴅᴅᴇᴅ: {title} - {feed_link} - {filters}")
         except (IndexError, AttributeError) as e:
             LOGGER.error(str(e))
-            msg = "The link doesn't seem to be a RSS feed or it's region-blocked!"
+            msg = "ᴛʜᴇ ʟɪɴᴋ ᴅᴏᴇꜱɴ'ᴛ ꜱᴇᴇᴍ ᴛᴏ ʙᴇ ᴀ ʀꜱꜱ ꜰᴇᴇᴅ ᴏʀ ɪᴛ'ꜱ ʀᴇɢɪᴏɴ-ʙʟᴏᴄᴋᴇᴅ!"
             sendMessage(msg, context.bot, update.message)
         except Exception as e:
             LOGGER.error(str(e))
@@ -124,27 +124,27 @@ def rss_unsub(update, context):
         title = str(args[1])
         exists = rss_dict.get(title)
         if exists is None:
-            msg = "Rss link not exists! Nothing removed!"
+            msg = "ʀꜱꜱ ʟɪɴᴋ ɴᴏᴛ ᴇxɪꜱᴛꜱ! ɴᴏᴛʜɪɴɢ ʀᴇᴍᴏᴠᴇᴅ!"
             LOGGER.error(msg)
             sendMessage(msg, context.bot, update.message)
         else:
             DbManger().rss_delete(title)
             with rss_dict_lock:
                 del rss_dict[title]
-            sendMessage(f"Rss link with Title: <code>{title}</code> has been removed!", context.bot, update.message)
-            LOGGER.info(f"Rss link with Title: {title} has been removed!")
+            sendMessage(f"ʀꜱꜱ ʟɪɴᴋ ᴡɪᴛʜ ᴛɪᴛʟᴇ: <code>{title}</code> ʜᴀꜱ ʙᴇᴇɴ ʀᴇᴍᴏᴠᴇᴅ!", context.bot, update.message)
+            LOGGER.info(f"ʀꜱꜱ ʟɪɴᴋ ᴡɪᴛʜ ᴛɪᴛʟᴇ: {title} ʜᴀꜱ ʙᴇᴇɴ ʀᴇᴍᴏᴠᴇᴅ!")
     except IndexError:
-        sendMessage(f"Use this format to remove feed url:\n/{BotCommands.RssUnSubCommand} Title", context.bot, update.message)
+        sendMessage(f"ᴜꜱᴇ ᴛʜɪꜱ ꜰᴏʀᴍᴀᴛ ᴛᴏ ʀᴇᴍᴏᴠᴇ ꜰᴇᴇᴅ ᴜʀʟ:\n/{BotCommands.RssUnSubCommand} ᴛɪᴛʟᴇ", context.bot, update.message)
 
 def rss_settings(update, context):
     buttons = button_build.ButtonMaker()
-    buttons.sbutton("Unsubscribe All", "rss unsuball")
+    buttons.sbutton("ᴜɴꜱᴜʙꜱᴄʀɪʙᴇ ᴀʟʟ", "ʀꜱꜱ ᴜɴꜱᴜʙᴀʟʟ")
     if rss_job.enabled:
-        buttons.sbutton("Pause", "rss pause")
+        buttons.sbutton("ᴘᴀᴜꜱᴇ", "ʀꜱꜱ ᴘᴀᴜꜱᴇ")
     else:
-        buttons.sbutton("Start", "rss start")
+        buttons.sbutton("ꜱᴛᴀʀᴛ", "ʀꜱꜱ ꜱᴛᴀʀᴛ")
     button = InlineKeyboardMarkup(buttons.build_menu(1))
-    sendMarkup('Rss Settings', context.bot, update.message, button)
+    sendMarkup('ʀꜱꜱ ꜱᴇᴛᴛɪɴɢꜱ', context.bot, update.message, button)
 
 def rss_set_update(update, context):
     query = update.callback_query
@@ -153,28 +153,28 @@ def rss_set_update(update, context):
     data = query.data
     data = data.split(" ")
     if not CustomFilters._owner_query(user_id):
-        query.answer(text="You don't have permission to use these buttons!", show_alert=True)
-    elif data[1] == 'unsuball':
+        query.answer(text="ʏᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴘᴇʀᴍɪꜱꜱɪᴏɴ ᴛᴏ ᴜꜱᴇ ᴛʜᴇꜱᴇ ʙᴜᴛᴛᴏɴꜱ!", show_alert=True)
+    elif data[1] == 'ᴜɴꜱᴜʙᴀʟʟ':
         query.answer()
         if len(rss_dict) > 0:
             DbManger().rss_delete_all()
             with rss_dict_lock:
                 rss_dict.clear()
             rss_job.enabled = False
-            editMessage("All Rss Subscriptions have been removed.", msg)
-            LOGGER.info("All Rss Subscriptions have been removed.")
+            editMessage("ᴀʟʟ ʀꜱꜱ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴꜱ ʜᴀᴠᴇ ʙᴇᴇɴ ʀᴇᴍᴏᴠᴇᴅ.", msg)
+            LOGGER.info("ᴀʟʟ ʀꜱꜱ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴꜱ ʜᴀᴠᴇ ʙᴇᴇɴ ʀᴇᴍᴏᴠᴇᴅ.")
         else:
-            editMessage("No subscriptions to remove!", msg)
-    elif data[1] == 'pause':
+            editMessage("ɴᴏ ꜱᴜʙꜱᴄʀɪᴘᴛɪᴏɴꜱ ᴛᴏ ʀᴇᴍᴏᴠᴇ!", msg)
+    elif data[1] == 'ᴘᴀᴜꜱᴇ':
         query.answer()
         rss_job.enabled = False
-        editMessage("Rss Paused", msg)
-        LOGGER.info("Rss Paused")
-    elif data[1] == 'start':
+        editMessage("ʀꜱꜱ ᴘᴀᴜꜱᴇᴅ", msg)
+        LOGGER.info("ʀꜱꜱ ᴘᴀᴜꜱᴇᴅ")
+    elif data[1] == 'ꜱᴛᴀʀᴛ':
         query.answer()
         rss_job.enabled = True
-        editMessage("Rss Started", msg)
-        LOGGER.info("Rss Started")
+        editMessage("ʀꜱꜱ ꜱᴛᴀʀᴛᴇᴅ", msg)
+        LOGGER.info("ʀꜱꜱ ꜱᴛᴀʀᴛᴇᴅ")
 
 def rss_monitor(context):
     with rss_dict_lock:
@@ -195,8 +195,8 @@ def rss_monitor(context):
                     if data[1] == rss_d.entries[feed_count]['link'] or data[2] == rss_d.entries[feed_count]['title']:
                         break
                 except IndexError:
-                    LOGGER.warning(f"Reached Max index no. {feed_count} for this feed: {name}. \
-                          Maybe you need to add less RSS_DELAY to not miss some torrents")
+                    LOGGER.warning(f"ʀᴇᴀᴄʜᴇᴅ ᴍᴀx ɪɴᴅᴇx ɴᴏ. {feed_count} ꜰᴏʀ ᴛʜɪꜱ ꜰᴇᴇᴅ: {name}. \
+                          ᴍᴀʏʙᴇ ʏᴏᴜ ɴᴇᴇᴅ ᴛᴏ ᴀᴅᴅ ʟᴇꜱꜱ ʀꜱꜱ_ᴅᴇʟᴀʏ ᴛᴏ ɴᴏᴛ ᴍɪꜱꜱ ꜱᴏᴍᴇ ᴛᴏʀʀᴇɴᴛꜱ")
                     break
                 parse = True
                 for list in data[3]:
@@ -213,18 +213,18 @@ def rss_monitor(context):
                 if RSS_COMMAND is not None:
                     feed_msg = f"{RSS_COMMAND} {url}"
                 else:
-                    feed_msg = f"<b>Name: </b><code>{rss_d.entries[feed_count]['title'].replace('>', '').replace('<', '')}</code>\n\n"
-                    feed_msg += f"<b>Link: </b><code>{url}</code>"
+                    feed_msg = f"<b>╔—●ɴᴀᴍᴇ: </b><code>{rss_d.entries[feed_count]['title'].replace('>', '').replace('<', '')}</code>\n\n"
+                    feed_msg += f"<b>╟—●ʟɪɴᴋ: </b><code>{url}</code>"
                 sendRss(feed_msg, context.bot)
                 feed_count += 1
                 sleep(5)
             DbManger().rss_update(name, str(last_link), str(last_title))
             with rss_dict_lock:
                 rss_dict[name] = [data[0], str(last_link), str(last_title), data[3]]
-            LOGGER.info(f"Feed Name: {name}")
-            LOGGER.info(f"Last item: {last_link}")
+            LOGGER.info(f"╔—●ꜰᴇᴇᴅ ɴᴀᴍᴇ: {name}")
+            LOGGER.info(f"╟—●ʟᴀꜱᴛ ɪᴛᴇᴍ: {last_link}")
         except Exception as e:
-            LOGGER.error(f"{e} Feed Name: {name} - Feed Link: {data[0]}")
+            LOGGER.error(f"{e} ╔—●ꜰᴇᴇᴅ ʟɪɴᴋ: {name} - Feed Link: {data[0]}")
             continue
 
 if DB_URI is not None and RSS_CHAT_ID is not None:
