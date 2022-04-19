@@ -33,7 +33,7 @@ class MirrorStatus:
     STATUS_CHECKING = "ᴄʜᴇᴄᴋɪɴɢᴜᴘ...📝"
     STATUS_SEEDING = "ꜱᴇᴇᴅɪɴɢ...🌧"
 
-SIZE_UNITS = ['ʙ', 'ᴋʙ', 'ᴍʙ', 'ɢʙ', 'ᴛʙ', 'ᴘʙ']
+SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB']
 
 
 class setInterval:
@@ -152,7 +152,7 @@ def get_readable_message():
                            f" | <b>╟—●ʟᴇᴇᴄʜᴇʀꜱ:</b> {download.torrent_info().num_leechs}"
                 except:
                     pass
-                msg += f"\n\n<code>/{BotCommands.CancelMirror} {download.gid()}</code>"
+                msg += f"\n<code>/{BotCommands.CancelMirror} {download.gid()}</code>"
             elif download.status() == MirrorStatus.STATUS_SEEDING:
                 msg += f"\n<b>╟—●🖇ꜱɪᴢᴇ: </b>{download.size()}"
                 msg += f"\n<b>╟—●⚡️ꜱᴘᴇᴇᴅ: </b>{get_readable_file_size(download.torrent_info().upspeed)}/s"
