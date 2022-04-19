@@ -185,13 +185,13 @@ class MirrorListener:
             update_all_messages()
 
     def onUploadComplete(self, link: str, size, files, folders, typ, name: str):
-        msg = f'<b>╔—●ɴᴀᴍᴇ: </b><code>{escape(name)}</code>\n<b>╟—●Size: </b>{size}'
+        msg = f'<b>╔—●Name: </b><code>{escape(name)}</code>\n<b>╟—●Size: </b>{size}'
         if self.isLeech:
             count = len(files)
-            msg += f'\n<b>╟—●ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ: </b>{count}'
+            msg += f'\n<b>╟—●Total Files: </b>{count}'
             if typ != 0:
-                msg += f'\n<b>╟—●ᴄᴏʀʀᴜᴘᴛᴇᴅ ꜰɪʟᴇꜱ: </b>{typ}'
-            msg += f'\n<b>╚—●ᴄᴄ: </b>{self.tag}\n'
+                msg += f'\n<b>╟—●Corrupted Files: </b>{typ}'
+            msg += f'\n<b>╚—●cc: </b>{self.tag}\n'
             if self.message.chat.type == 'private':
                 sendMessage(msg, self.bot, self.message)
             else:
