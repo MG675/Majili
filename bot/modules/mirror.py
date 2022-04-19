@@ -96,7 +96,7 @@ class MirrorListener:
             try:
                 if ospath.isfile(m_path):
                     path = get_base_name(m_path)
-                LOGGER.info(f"╟—●ᴇxᴛʀᴀᴄᴛɪɴɢ: {name}")
+                LOGGER.info(f"Extracting: {name}")
                 with download_dict_lock:
                     download_dict[self.uid] = ExtractStatus(name, m_path, size)
                 if ospath.isdir(m_path):
@@ -122,7 +122,7 @@ class MirrorListener:
                     else:
                         result = srun(["bash", "extract", m_path])
                     if result.returncode == 0:
-                        LOGGER.info(f"╟—●ᴇxᴛʀᴀᴄᴛᴇᴅ ᴘᴀᴛʜ: {path}")
+                        LOGGER.info(f"Extracted Path: {path}")
                         osremove(m_path)
                     else:
                         LOGGER.error('Unable to extract archive! Uploading anyway')
@@ -145,12 +145,12 @@ class MirrorListener:
                             checked = True
                             with download_dict_lock:
                                 download_dict[self.uid] = SplitStatus(up_name, up_path, size)
-                            LOGGER.info(f"╟—●ꜱᴘʟɪᴛᴛɪɴɢ: {up_name}")
+                            LOGGER.info(f"Splitting: {up_name}")
                         fs_split(f_path, f_size, file_, dirpath, TG_SPLIT_SIZE)
                         osremove(f_path)
         if self.isLeech:
             size = get_path_size(f'{DOWNLOAD_DIR}{self.uid}')
-            LOGGER.info(f"╔—●ʟᴇᴇᴄʜ ɴᴀᴍᴇ: {up_name}")
+            LOGGER.info(f"Leech Name: {up_name}")
             tg = TgUploader(up_name, self)
             tg_upload_status = TgUploadStatus(tg, size, gid, self)
             with download_dict_lock:
@@ -159,7 +159,7 @@ class MirrorListener:
             tg.upload()
         else:
             size = get_path_size(up_path)
-            LOGGER.info(f"╔—●ᴜᴘʟᴏᴀᴅ ɴᴀᴍᴇ: {up_name}")
+            LOGGER.info(f"╔—●Upload Name: {up_name}")
             drive = GoogleDriveHelper(up_name, self)
             upload_status = UploadStatus(drive, size, gid, self)
             with download_dict_lock:
@@ -177,7 +177,7 @@ class MirrorListener:
             except Exception as e:
                 LOGGER.error(str(e))
             count = len(download_dict)
-        msg = f"{self.tag} ʏᴏᴜʀ ᴅᴏᴡɴʟᴏᴀᴅ ʜᴀꜱ ʙᴇᴇɴ ꜱᴛᴏᴘᴘᴇᴅ ᴅᴜᴇ ᴛᴏ: {error}"
+        msg = f"{self.tag} your download has been stopped due to: {error}"
         sendMessage(msg, self.bot, self.message)
         if count == 0:
             self.clean()
@@ -376,13 +376,13 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
     if not is_url(link) and not is_magnet(link) and not ospath.exists(link):
         help_msg = "<b>Send link along with command line:</b>"
         help_msg += "\n<code>/command</code> {link} |newname pswd: xx [zip/unzip]"
-        help_msg += "\n<b>By replying to link or file:</b>"
+        help_msg += "\n\n<b>By replying to link or file:</b>"
         help_msg += "\n<code>/command</code> |newname pswd: xx [zip/unzip]"
-        help_msg += "\n<b>Direct link authorization:</b>"
+        help_msg += "\n\n<b>Direct link authorization:</b>"
         help_msg += "\n<code>/command</code> {link} |newname pswd: xx\nusername\npassword"
-        help_msg += "\n<b>Qbittorrent selection:</b>"
+        help_msg += "\n\n<b>Qbittorrent selection:</b>"
         help_msg += "\n<code>/qbcommand</code> <b>s</b> {link} or by replying to {file}"
-        help_msg += "\n<b>Multi links only by replying to first link or file:</b>"
+        help_msg += "\n\n<b>Multi links only by replying to first link or file:</b>"
         help_msg += "\n<code>/command</code> 10(number of links/files)"
         return sendMessage(help_msg, bot, message)
 
@@ -430,8 +430,8 @@ def _mirror(bot, message, isZip=False, extract=False, isQbit=False, isLeech=Fals
 
     if is_gdrive_link(link):
         if not isZip and not extract and not isLeech:
-            gmsg = f"Use /{BotCommands.CloneCommand} to clone Google Drive file/folder\n"
-            gmsg += f"Use /{BotCommands.ZipMirrorCommand} to make zip of Google Drive folder\n"
+            gmsg = f"Use /{BotCommands.CloneCommand} to clone Google Drive file/folder\n\n"
+            gmsg += f"Use /{BotCommands.ZipMirrorCommand} to make zip of Google Drive folder\n\n"
             gmsg += f"Use /{BotCommands.UnzipMirrorCommand} to extracts Google Drive archive file"
             return sendMessage(gmsg, bot, message)
         Thread(target=add_gd_download, args=(link, listener, is_gdtot)).start()
