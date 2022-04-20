@@ -126,7 +126,7 @@ def get_readable_message():
                 globals()['PAGE_NO'] -= 1
             START = COUNT
         for index, download in enumerate(list(download_dict.values())[START:], start=1):
-            msg += f"<b>\n<╔—●ɴᴀᴍᴇ:</b> <code>{escape(str(download.name()))}</code>"
+            msg += f"\n<b>╔—●ɴᴀᴍᴇ:</b> <code>{escape(str(download.name()))}</code>"
             msg += f"\n<b>╟—●ꜱᴛᴀᴛᴜꜱ:</b> <i>{download.status()}</i>"
             if download.status() not in [
                 MirrorStatus.STATUS_ARCHIVING,
@@ -152,14 +152,14 @@ def get_readable_message():
                            f" | <b>╟—●ʟᴇᴇᴄʜᴇʀꜱ:</b> {download.torrent_info().num_leechs}"
                 except:
                     pass
-                msg += f"\n<code>\n╚—● /{BotCommands.CancelMirror} {download.gid()}</code>\n"
+                msg += f"\n╚—● <code>/{BotCommands.CancelMirror} {download.gid()}</code>\n"
             elif download.status() == MirrorStatus.STATUS_SEEDING:
                 msg += f"\n<b>╟—●🖇ꜱɪᴢᴇ: </b>{download.size()}"
                 msg += f"\n<b>╟—●⚡️ꜱᴘᴇᴇᴅ: </b>{get_readable_file_size(download.torrent_info().upspeed)}/s"
                 msg += f" | <b>╟—●📥ᴜᴘʟᴏᴀᴅᴇᴅ: </b>{get_readable_file_size(download.torrent_info().uploaded)}"
                 msg += f"\n<b>╟—●📊ʀᴀᴛɪᴏ: </b>{round(download.torrent_info().ratio, 3)}"
                 msg += f" | <b>╟—●⏳ᴛɪᴍᴇ: </b>{get_readable_time(download.torrent_info().seeding_time)}"
-                msg += f"\n<code>\n╚—● /{BotCommands.CancelMirror} {download.gid()}</code>\n"
+                msg += f"\n╚—● <code>/{BotCommands.CancelMirror} {download.gid()}</code>\n"
             else:
                 msg += f"\n<b>╟—●🖇ꜱɪᴢᴇ: </b>{download.size()}"
             msg += "\n"
