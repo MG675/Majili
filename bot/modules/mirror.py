@@ -60,7 +60,7 @@ class MirrorListener:
 
     def onDownloadComplete(self):
         with download_dict_lock:
-            LOGGER.info(f"Download completed: {download_dict[self.uid].name()}")
+            LOGGER.info(f"╔—●Download completed: {download_dict[self.uid].name()}")
             download = download_dict[self.uid]
             name = str(download.name()).replace('/', '')
             gid = download.gid()
@@ -145,12 +145,12 @@ class MirrorListener:
                             checked = True
                             with download_dict_lock:
                                 download_dict[self.uid] = SplitStatus(up_name, up_path, size)
-                            LOGGER.info(f"Splitting: {up_name}")
+                            LOGGER.info(f"╔—●Splitting: {up_name}")
                         fs_split(f_path, f_size, file_, dirpath, TG_SPLIT_SIZE)
                         osremove(f_path)
         if self.isLeech:
             size = get_path_size(f'{DOWNLOAD_DIR}{self.uid}')
-            LOGGER.info(f"Leech Name: {up_name}")
+            LOGGER.info(f"╔—●Leech Name: {up_name}")
             tg = TgUploader(up_name, self)
             tg_upload_status = TgUploadStatus(tg, size, gid, self)
             with download_dict_lock:
