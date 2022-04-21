@@ -60,7 +60,7 @@ class MirrorListener:
 
     def onDownloadComplete(self):
         with download_dict_lock:
-            LOGGER.info(f"╔—●Download completed: {download_dict[self.uid].name()}")
+            LOGGER.info(f"╔—●ᴅᴏᴡɴʟᴏᴀᴅ ᴄᴏᴍᴘʟᴇᴛᴇᴅ: {download_dict[self.uid].name()}")
             download = download_dict[self.uid]
             name = str(download.name()).replace('/', '')
             gid = download.gid()
@@ -145,12 +145,12 @@ class MirrorListener:
                             checked = True
                             with download_dict_lock:
                                 download_dict[self.uid] = SplitStatus(up_name, up_path, size)
-                            LOGGER.info(f"╔—●Splitting: {up_name}")
+                            LOGGER.info(f"╔—●ꜱᴘʟɪᴛᴛɪɴɢ: {up_name}")
                         fs_split(f_path, f_size, file_, dirpath, TG_SPLIT_SIZE)
                         osremove(f_path)
         if self.isLeech:
             size = get_path_size(f'{DOWNLOAD_DIR}{self.uid}')
-            LOGGER.info(f"╔—●Leech Name: {up_name}")
+            LOGGER.info(f"╔—●ʟᴇᴇᴄʜ ɴᴀᴍᴇ: {up_name}")
             tg = TgUploader(up_name, self)
             tg_upload_status = TgUploadStatus(tg, size, gid, self)
             with download_dict_lock:
@@ -185,13 +185,13 @@ class MirrorListener:
             update_all_messages()
 
     def onUploadComplete(self, link: str, size, files, folders, typ, name: str):
-        msg = f'<b>╔—●Name: </b><code>{escape(name)}</code>\n<b>╟—●Size: </b>{size}'
+        msg = f'<b>╔—●ɴᴀᴍᴇ: </b><code>{escape(name)}</code>\n<b>╟—●ꜱɪᴢᴇ: </b>{size}'
         if self.isLeech:
             count = len(files)
-            msg += f'\n<b>╟—●Total Files: </b>{count}'
+            msg += f'\n<b>╟—●ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ: </b>{count}'
             if typ != 0:
-                msg += f'\n<b>╟—●Corrupted Files: </b>{typ}'
-            msg += f'\n<b>╚—●cc: </b>{self.tag}\n'
+                msg += f'\n<b>╟—●ᴄᴏʀʀᴜᴘᴛᴇᴅ ꜰɪʟᴇꜱ: </b>{typ}'
+            msg += f'\n<b>╚—●ᴄᴄ: </b>{self.tag}\n'
             if self.message.chat.type == 'private':
                 sendMessage(msg, self.bot, self.message)
             else:
