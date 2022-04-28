@@ -95,7 +95,7 @@ class TgUploader:
                     self.__sent_msg = self.__sent_msg.reply_video(video=up_path,
                                                               quote=True,
                                                               caption=cap_mono,
-                                                              parse_mode="html",
+                                                              PARSE_MODE="html",
                                                               duration=duration,
                                                               width=width,
                                                               height=height,
