@@ -41,7 +41,7 @@ class TgUploader:
             for file_ in sorted(files):
                 if self.__is_cancelled:
                     return
-                if file_.lower().endswith(tuple(EXTENTION_FILTER)):
+                if file_.endswith('.torrent'):
                     continue
                 up_path = ospath.join(dirpath, file_)
                 fsize = ospath.getsize(up_path)
