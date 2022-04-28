@@ -74,16 +74,15 @@ Type /{BotCommands.HelpCommand} to get a list of available commands
 '''
         sendMarkup(start_string, context.bot, update.message, reply_markup)
     else:
-        sendMarkup('Not Authorized user', context.bot, update.message, reply_markup)
+        sendMarkup('Not Authorized user, deploy your own mirror-leech bot', context.bot, update.message, reply_markup)
 
 def restart(update, context):
     restart_message = sendMessage("Restarting...", context.bot, update.message)
     if Interval:
         Interval[0].cancel()
     alive.kill()
-    srun(["pkill", "-f", "gunicorn"])
     clean_all()
-    srun(["pkill", "-f", "aria2c"])
+    srun(["pkill", "-9", "-f", "gunicorn|aria2c|qbittorrent-nox|megasdkrest"])
     srun(["python3", "update.py"])
     with open(".restartmsg", "w") as f:
         f.truncate(0)
@@ -177,23 +176,14 @@ help = telegraph.create_page(
 
 help_string = f'''
 /{BotCommands.PingCommand}: Check how long it takes to Ping the Bot
-
 /{BotCommands.AuthorizeCommand}: Authorize a chat or a user to use the bot (Can only be invoked by Owner & Sudo of the bot)
-
 /{BotCommands.UnAuthorizeCommand}: Unauthorize a chat or a user to use the bot (Can only be invoked by Owner & Sudo of the bot)
-
 /{BotCommands.AuthorizedUsersCommand}: Show authorized users (Only Owner & Sudo)
-
 /{BotCommands.AddSudoCommand}: Add sudo user (Only Owner)
-
 /{BotCommands.RmSudoCommand}: Remove sudo users (Only Owner)
-
 /{BotCommands.RestartCommand}: Restart and update the bot
-
 /{BotCommands.LogCommand}: Get a log file of the bot. Handy for getting crash reports
-
 /{BotCommands.ShellCommand}: Run commands in Shell (Only Owner)
-
 /{BotCommands.ExecHelpCommand}: Get help for Executor module (Only Owner)
 '''
 
