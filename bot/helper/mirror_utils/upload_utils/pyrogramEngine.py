@@ -5,7 +5,7 @@ from pyrogram.errors import FloodWait, RPCError
 from PIL import Image
 from threading import RLock
 
-from bot import app, DOWNLOAD_DIR, AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME
+from bot import app, DOWNLOAD_DIR, AS_DOCUMENT, AS_DOC_USERS, AS_MEDIA_USERS, CUSTOM_FILENAME, EXTENTION_FILTER
 from bot.helper.ext_utils.fs_utils import take_ss, get_media_info, get_video_resolution, get_path_size
 from bot.helper.ext_utils.bot_utils import get_readable_file_size
 
@@ -41,7 +41,7 @@ class TgUploader:
             for file_ in sorted(files):
                 if self.__is_cancelled:
                     return
-                if file_.endswith('.torrent'):
+                if file_.lower().endswith(tuple(EXTENTION_FILTER)):
                     continue
                 up_path = ospath.join(dirpath, file_)
                 fsize = ospath.getsize(up_path)
