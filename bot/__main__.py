@@ -43,29 +43,29 @@ def stats(update, context):
     mem_t = get_readable_file_size(memory.total)
     mem_a = get_readable_file_size(memory.available)
     mem_u = get_readable_file_size(memory.used)
-    stats = f'<b>╭───《⟹ʜᴇɴᴛᴀɪ⟸》</b> {last_commit}\n'\
-            f'<b>├─ʙᴏᴛ ᴜᴘᴛɪᴍᴇ:</b> {currentTime}\n'\
-            f'<b>├─ᴏꜱ ᴜᴘᴛɪᴍᴇ:</b> {osUptime}\n'\
-            f'<b>├─📀ᴛᴏᴛᴀʟ ᴅɪꜱᴋ ꜱᴘᴀᴄᴇ:</b> {total}\n'\
-            f'<b>├─💽ᴜꜱᴇᴅ:</b> {used} | <b>Free:</b> {free}\n'\
-            f'<b>├─📤ᴜᴘʟᴏᴀᴅ:</b> {sent}\n'\
-            f'<b>├─📥ᴅᴏᴡɴʟᴏᴀᴅ:</b> {recv}\n'\
-            f'<b>├─💻ᴄᴘᴜ:</b> {cpuUsage}%\n'\
-            f'<b>├─💾ʀᴀᴍ:</b> {mem_p}%\n'\
-            f'<b>├─💿ᴅɪꜱᴋ:</b> {disk}%\n'\
-            f'<b>├─♦️ᴘʜʏꜱɪᴄᴀʟ ᴄᴏʀᴇꜱ:</b> {p_core}\n'\
-            f'<b>├─♦️ᴛᴏᴛᴀʟ ᴄᴏʀᴇꜱ:</b> {t_core}\n'\
-            f'<b>├─⚠️ꜱᴡᴀᴘ:</b> {swap_t} | <b>ᴜꜱᴇᴅ:</b> {swap_p}%\n'\
-            f'<b>├─💾ᴍᴇᴍᴏʀʏ ᴛᴏᴛᴀʟ:</b> {mem_t}\n'\
-            f'<b>├─ᴍᴇᴍᴏʀʏ ꜰʀᴇᴇ:</b> {mem_a}\n'\
-            f'<b>╰───ᴍᴇᴍᴏʀʏ ᴜꜱᴇᴅ:</b> {mem_u}\n'
+    stats = f'<b>Commit Date:</b> {last_commit}\n\n'\
+            f'<b>Bot Uptime:</b> {currentTime}\n'\
+            f'<b>OS Uptime:</b> {osUptime}\n\n'\
+            f'<b>Total Disk Space:</b> {total}\n'\
+            f'<b>Used:</b> {used} | <b>Free:</b> {free}\n\n'\
+            f'<b>Upload:</b> {sent}\n'\
+            f'<b>Download:</b> {recv}\n\n'\
+            f'<b>CPU:</b> {cpuUsage}%\n'\
+            f'<b>RAM:</b> {mem_p}%\n'\
+            f'<b>DISK:</b> {disk}%\n\n'\
+            f'<b>Physical Cores:</b> {p_core}\n'\
+            f'<b>Total Cores:</b> {t_core}\n\n'\
+            f'<b>SWAP:</b> {swap_t} | <b>Used:</b> {swap_p}%\n'\
+            f'<b>Memory Total:</b> {mem_t}\n'\
+            f'<b>Memory Free:</b> {mem_a}\n'\
+            f'<b>Memory Used:</b> {mem_u}\n'
     sendMessage(stats, context.bot, update.message)
 
 
 def start(update, context):
     buttons = ButtonMaker()
-    buttons.buildbutton("ᴄʀᴇᴀᴛᴏʀ", "https://t.me/imhurad")
-    buttons.buildbutton("ʙᴏᴛ ꜱᴜᴘᴘᴏʀᴛ", "https://t.me/RoBot3ir")
+    buttons.buildbutton("ᴄʀᴇᴀᴛᴏʀ", "https://t.me/")
+    buttons.buildbutton("ʙᴏᴛ ꜱᴜᴘᴘᴏʀᴛ", "https://t.me/")
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         start_string = f'''
@@ -110,23 +110,11 @@ help_string_telegraph = f'''<br>
 <br><br>
 <b>/{BotCommands.UnzipMirrorCommand}</b> [download_url][magnet_link]: Start mirroring and upload the file/folder extracted from any archive extension
 <br><br>
-<b>/{BotCommands.QbMirrorCommand}</b> [magnet_link][torrent_file][torrent_file_url]: Start Mirroring using qBittorrent, Use <b>/{BotCommands.QbMirrorCommand} s</b> to select files before downloading
-<br><br>
-<b>/{BotCommands.QbZipMirrorCommand}</b> [magnet_link][torrent_file][torrent_file_url]: Start mirroring using qBittorrent and upload the file/folder compressed with zip extension
-<br><br>
-<b>/{BotCommands.QbUnzipMirrorCommand}</b> [magnet_link][torrent_file][torrent_file_url]: Start mirroring using qBittorrent and upload the file/folder extracted from any archive extension
-<br><br>
 <b>/{BotCommands.LeechCommand}</b> [download_url][magnet_link]: Start leeching to Telegram, Use <b>/{BotCommands.LeechCommand} s</b> to select files before leeching
 <br><br>
 <b>/{BotCommands.ZipLeechCommand}</b> [download_url][magnet_link]: Start leeching to Telegram and upload the file/folder compressed with zip extension
 <br><br>
 <b>/{BotCommands.UnzipLeechCommand}</b> [download_url][magnet_link][torent_file]: Start leeching to Telegram and upload the file/folder extracted from any archive extension
-<br><br>
-<b>/{BotCommands.QbLeechCommand}</b> [magnet_link][torrent_file][torrent_file_url]: Start leeching to Telegram using qBittorrent, Use <b>/{BotCommands.QbLeechCommand} s</b> to select files before leeching
-<br><br>
-<b>/{BotCommands.QbZipLeechCommand}</b> [magnet_link][torrent_file][torrent_file_url]: Start leeching to Telegram using qBittorrent and upload the file/folder compressed with zip extension
-<br><br>
-<b>/{BotCommands.QbUnzipLeechCommand}</b> [magnet_link][torrent_file][torrent_file_url]: Start leeching to Telegram using qBittorrent and upload the file/folder extracted from any archive extension
 <br><br>
 <b>/{BotCommands.CloneCommand}</b> [drive_url][gdtot_url]: Copy file/folder to Google Drive
 <br><br>
@@ -198,18 +186,12 @@ botcmds = [
         (f'{BotCommands.MirrorCommand}', 'Mirror'),
         (f'{BotCommands.ZipMirrorCommand}','Mirror and upload as zip'),
         (f'{BotCommands.UnzipMirrorCommand}','Mirror and extract files'),
-        (f'{BotCommands.QbMirrorCommand}','Mirror torrent using qBittorrent'),
-        (f'{BotCommands.QbZipMirrorCommand}','Mirror torrent and upload as zip using qb'),
-        (f'{BotCommands.QbUnzipMirrorCommand}','Mirror torrent and extract files using qb'),
         (f'{BotCommands.WatchCommand}','Mirror yt-dlp supported link'),
         (f'{BotCommands.ZipWatchCommand}','Mirror yt-dlp supported link as zip'),
         (f'{BotCommands.CloneCommand}','Copy file/folder to Drive'),
         (f'{BotCommands.LeechCommand}','Leech'),
         (f'{BotCommands.ZipLeechCommand}','Leech and upload as zip'),
         (f'{BotCommands.UnzipLeechCommand}','Leech and extract files'),
-        (f'{BotCommands.QbLeechCommand}','Leech torrent using qBittorrent'),
-        (f'{BotCommands.QbZipLeechCommand}','Leech torrent and upload as zip using qb'),
-        (f'{BotCommands.QbUnzipLeechCommand}','Leech torrent and extract using qb'),
         (f'{BotCommands.LeechWatchCommand}','Leech yt-dlp supported link'),
         (f'{BotCommands.LeechZipWatchCommand}','Leech yt-dlp supported link as zip'),
         (f'{BotCommands.CountCommand}','Count file/folder of Drive'),
